@@ -1,10 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:reddit_clone/components/image_post.dart';
 import 'package:reddit_clone/components/text_post.dart';
+import 'package:reddit_clone/firebase_options.dart';
 import 'package:reddit_clone/helper/posts_getter.dart';
 import 'package:reddit_clone/models/Post.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
