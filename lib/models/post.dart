@@ -1,41 +1,50 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:reddit_clone/models/comment.dart';
 
-class TextPost {
-  final String title;
+class Post {
+  final String id;
+  final String userId;
   final String content;
-  final String community;
-  final String image;
-  final TimeOfDay time;
-  final int votes;
-  final int comments;
-
-  const TextPost({
-    required this.title,
-    required this.content,
-    required this.community,
-    required this.image,
-    required this.time,
-    required this.votes,
-    required this.comments,
-  });
-}
-
-class ImagePost {
+  final String subhold;
+  final Timestamp timestamp;
   final String title;
-  final String image;
-  final String community;
-  final String communityImage;
-  final TimeOfDay time;
-  final int votes;
-  final int comments;
+  final int scorepoints;
+  final List<dynamic> comments;
 
-  const ImagePost({
-    required this.title,
-    required this.image,
-    required this.community,
-    required this.communityImage,
-    required this.time,
-    required this.votes,
-    required this.comments,
-  });
+  Post(
+      {required this.id,
+      required this.content,
+      required this.userId,
+      required this.subhold,
+      required this.timestamp,
+      required this.title,
+      required this.scorepoints,
+      required this.comments});
+
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      id: json['post_id'],
+      content: json['content'],
+      subhold: json['subhold'],
+      userId: json['author'],
+      timestamp: json['timestamp'],
+      title: json['title'],
+      scorepoints: json['scorepoints'],
+      comments: json['comments'],
+    );
+  }
+
+  factory Post.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> doc) {
+    return Post(
+      id: doc.id,
+      content: doc['content'],
+      subhold: doc['subhold'],
+      userId: doc['author'],
+      timestamp: doc['timestamp'],
+      title: doc['title'],
+      scorepoints: doc['scorepoints'],
+      comments: doc['comments'],
+    );
+  }
 }
