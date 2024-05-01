@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:reddit_clone/components/text_post.dart';
 import 'package:reddit_clone/helper/posts_fetch.dart';
 import 'package:reddit_clone/models/post.dart';
+import 'package:reddit_clone/models/user.dart';
+import 'package:reddit_clone/pages/tertiary/myprofile.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -13,8 +15,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String selectedValue = "1";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,22 +24,14 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: const Icon(Icons.menu),
           onPressed: () {},
         ),
-        // title: DropdownButton<String>(
-        //   value: selectedValue,
-        //   items: const [
-        //     DropdownMenuItem(value: '1', child: Text('Home')),
-        //     DropdownMenuItem(value: '2', child: Text('Popular')),
-        //     DropdownMenuItem(value: '3', child: Text('Watch')),
-        //     DropdownMenuItem(value: '4', child: Text('Latest')),
-        //   ],
-        //   onChanged: (String? value) {
-        //     setState(() {
-        //       selectedValue = value!;
-        //     });
-        //   },
-        // ),
-        title: const Text('The Hold'),
-        centerTitle: true,
+        title: const Text(
+          'the hold',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            letterSpacing: -0.5,
+            color: Color.fromARGB(255, 114, 23, 17),
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -47,7 +39,16 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           IconButton(
             icon: const Icon(Icons.account_circle_outlined),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return Myprofile(
+                    user: User(
+                        userId: 'userId',
+                        username: 'username',
+                        honor: 0,
+                        email: 'email'));
+              }));
+            },
           ),
         ],
       ),
@@ -62,6 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
           } else {
             List<Post> listOfPosts = snapshot.data!;
             return ListView.builder(
+              physics: const BouncingScrollPhysics(),
               itemCount: listOfPosts.length,
               itemBuilder: (context, index) {
                 return TextPost(

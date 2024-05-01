@@ -1,11 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:reddit_clone/firebase_options.dart';
+import 'package:reddit_clone/helper/users_interact.dart';
 import 'package:reddit_clone/pages/communities.dart';
+import 'package:reddit_clone/pages/create/create_community.dart';
 import 'package:reddit_clone/pages/create/create_post.dart';
 import 'package:reddit_clone/pages/home.dart';
 import 'package:reddit_clone/pages/people.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:reddit_clone/pages/tertiary/myprofile.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +27,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int currentIndex = 1;
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +38,7 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(
               seedColor: const Color.fromARGB(255, 183, 87, 58)),
           useMaterial3: true,
+          fontFamily: 'Satoshi',
         ),
         home: Scaffold(
           body: [
@@ -72,6 +76,7 @@ class _MyAppState extends State<MyApp> {
           '/communities': (context) => const Communities(),
           '/people': (context) => const People(),
           '/create_post': (context) => const CreatePost(),
+          '/create_community': (context) => const CreateSubhold(),
         });
   }
 }

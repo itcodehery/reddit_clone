@@ -5,8 +5,14 @@ class Communities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text("Communities")),
-    );
+    return Scaffold(
+        body: const Center(child: Text("Communities")),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            //create a community
+            Navigator.of(context).pushNamed('/create_community');
+          },
+          child: const Icon(Icons.add),
+        ));
   }
 }

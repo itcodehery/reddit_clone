@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-class CreatePost extends StatefulWidget {
-  const CreatePost({Key? key}) : super(key: key);
+class CreateSubhold extends StatefulWidget {
+  const CreateSubhold({Key? key}) : super(key: key);
 
   @override
-  _CreatePostState createState() => _CreatePostState();
+  _CreateSubholdState createState() => _CreateSubholdState();
 }
 
-class _CreatePostState extends State<CreatePost> {
+class _CreateSubholdState extends State<CreateSubhold> {
   String selectedValue = "1";
   String communityGuidelines =
-      "Remember to keep the community friendly and inclusive! Before creating a post, please take a moment to review the community's guidelines. These guidelines help the moderators maintain a positive environment for everyone. Let's be respectful of each other's opinions and have productive discussions!";
+      "Subhold are communities for like-minded people. You will automatically become the moderator of the subhold you create. Remember to keep the community friendly and inclusive! Let's socialize and keep the convo alive!";
   // items to send to the database
   // title, content, community
-  String postTitle = " ";
-  String postContent = " ";
-  String postCommunity = " ";
+  String communityTitle = " ";
+  String communityDescription = " ";
+  String community = " ";
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _CreatePostState extends State<CreatePost> {
             Navigator.pop(context);
           },
         ),
-        title: const Text('Create Post',
+        title: const Text('Create a Subhold',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 letterSpacing: -0.5,
@@ -55,7 +55,7 @@ class _CreatePostState extends State<CreatePost> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "TL;DR: Be Respectful",
+                    "TL;DR: Power = Responsibility",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -74,7 +74,7 @@ class _CreatePostState extends State<CreatePost> {
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                "Post Details",
+                "Subhold Details",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -84,43 +84,18 @@ class _CreatePostState extends State<CreatePost> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                decoration: getInputDecoration('Title'),
+                decoration: getInputDecoration('Name of Hold'),
                 maxLength: 100,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                decoration: getInputDecoration('Content'),
+                decoration: getInputDecoration('About the Hold'),
                 maxLength: 200,
                 maxLines: 5,
               ),
             ),
-            Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  title: const Text(
-                    'Choose a community:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  subtitle: const Text("You must be following this community"),
-                  trailing: DropdownButton(
-                    padding: const EdgeInsets.all(4),
-                    value: selectedValue,
-                    items: const [
-                      DropdownMenuItem(value: '1', child: Text('flutter/hold')),
-                      DropdownMenuItem(value: '2', child: Text('react/hold')),
-                      DropdownMenuItem(value: '3', child: Text('angular/hold')),
-                    ],
-                    onChanged: (String? value) {
-                      setState(() {
-                        selectedValue = value!;
-                      });
-                    },
-                  ),
-                )),
           ],
         ),
       ),

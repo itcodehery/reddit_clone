@@ -30,6 +30,9 @@ class PostOptions {
         ListTile(
           leading: Icon(option.key),
           title: Text(option.value),
+          onTap: () {
+            //handle option
+          },
         ),
       );
     }

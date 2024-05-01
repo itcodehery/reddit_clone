@@ -9,64 +9,80 @@ class TextPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      child: InkWell(
-        onTap: () {},
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${post.userId} from ${post.subhold}",
-                        style: const TextStyle(fontSize: 14),
-                      ),
-                      Text(
-                        "${post.timestamp.toDate().hour}:${post.timestamp.toDate().minute}",
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                    ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
+      child: Card(
+        color: const Color.fromARGB(255, 255, 239, 235),
+        elevation: 0,
+        child: InkWell(
+          onTap: () {},
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  contentPadding: const EdgeInsets.all(2),
+                  title: Text(
+                    post.title,
+                    maxLines: 3,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: -0.3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                  const Spacer(),
-                  IconButton(
+                  trailing: IconButton(
                       onPressed: () {
                         //show options
-                        PostOptions().getOptions();
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Column(
+                                children: PostOptions().getOptions(),
+                              );
+                            });
                       },
                       icon: const Icon(Icons.more_vert)),
-                ],
-              ),
-              const Divider(),
-              Text(
-                post.title,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                post.content,
-                style: const TextStyle(fontSize: 16),
-              ),
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  getCustomButton(() {}, Icons.mode_comment_outlined,
-                      "${post.comments.length}"),
-                  const SizedBox(width: 16),
-                  getCustomButton(
-                      () {}, Icons.arrow_upward, "${post.scorepoints}"),
-                ],
-              ),
-            ],
+                const Divider(
+                  color: Color.fromARGB(255, 244, 191, 175),
+                ),
+                Text(
+                  "u/${post.userId} from h/${post.subhold}",
+                  style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 160, 44, 9)),
+                ),
+                Text(
+                  "${post.timestamp.toDate().hour}:${post.timestamp.toDate().minute}",
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  post.content,
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    getCustomButton(() {}, Icons.card_giftcard_outlined, ""),
+                    const SizedBox(width: 10),
+                    getCustomButton(() {}, Icons.share, ''),
+                    const Spacer(),
+                    getCustomButton(() {}, Icons.mode_comment_outlined,
+                        "${post.comments.length}"),
+                    const SizedBox(width: 10),
+                    getCustomButton(
+                        () {}, Icons.arrow_upward, "${post.scorepoints}"),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

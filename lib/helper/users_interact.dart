@@ -22,3 +22,9 @@ Future<List<User>> getUsers() async {
 
   return snapshot.docs.map((doc) => User.fromSnapshot(doc)).toList();
 }
+
+Future<User> getUser(String userId) async {
+  final userDoc = await firestore.collection('users').doc(userId).get();
+  return User.fromSnapshot(
+      userDoc as QueryDocumentSnapshot<Map<String, dynamic>>);
+}
