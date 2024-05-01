@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reddit_clone/helper/post_options.dart';
 import 'package:reddit_clone/models/post.dart';
 
 class TextPost extends StatelessWidget {
@@ -34,7 +35,11 @@ class TextPost extends StatelessWidget {
                   ),
                   const Spacer(),
                   IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.more_vert)),
+                      onPressed: () {
+                        //show options
+                        PostOptions().getOptions();
+                      },
+                      icon: const Icon(Icons.more_vert)),
                 ],
               ),
               const Divider(),

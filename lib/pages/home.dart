@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reddit_clone/components/text_post.dart';
 import 'package:reddit_clone/helper/posts_fetch.dart';
-import 'package:reddit_clone/models/comment.dart';
 import 'package:reddit_clone/models/post.dart';
 
 class MyHomePage extends StatefulWidget {
