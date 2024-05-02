@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reddit_clone/helper/communities_fetch.dart';
 
 class CreateSubhold extends StatefulWidget {
   const CreateSubhold({Key? key}) : super(key: key);
@@ -9,13 +10,12 @@ class CreateSubhold extends StatefulWidget {
 
 class _CreateSubholdState extends State<CreateSubhold> {
   String selectedValue = "1";
-  String communityGuidelines =
+  final String communityGuidelines =
       "Subhold are communities for like-minded people. You will automatically become the moderator of the subhold you create. Remember to keep the community friendly and inclusive! Let's socialize and keep the convo alive!";
   // items to send to the database
   // title, content, community
   String communityTitle = " ";
   String communityDescription = " ";
-  String community = " ";
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +38,16 @@ class _CreateSubholdState extends State<CreateSubhold> {
         actions: [
           IconButton(
             icon: const Icon(Icons.check),
-            onPressed: () {
+            onPressed: () async {
               //save the post to the database
+              await createSubhold(
+                      communityTitle, communityDescription, "haririoprivate")
+                  .then((value) {
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content:
+                        Text('h/$communityTitle has officially gone public!')));
+              });
             },
           ),
         ],
@@ -50,21 +58,22 @@ class _CreateSubholdState extends State<CreateSubhold> {
           children: [
             const SizedBox(height: 8),
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     "TL;DR: Power = Responsibility",
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  const SizedBox(height: 8),
                   Text(
                     communityGuidelines,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.normal,
                     ),
                   ),
@@ -76,7 +85,7 @@ class _CreateSubholdState extends State<CreateSubhold> {
               child: Text(
                 "Subhold Details",
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -86,6 +95,9 @@ class _CreateSubholdState extends State<CreateSubhold> {
               child: TextField(
                 decoration: getInputDecoration('Name of Hold'),
                 maxLength: 100,
+                onChanged: (value) {
+                  communityTitle = value;
+                },
               ),
             ),
             Padding(
@@ -94,6 +106,9 @@ class _CreateSubholdState extends State<CreateSubhold> {
                 decoration: getInputDecoration('About the Hold'),
                 maxLength: 200,
                 maxLines: 5,
+                onChanged: (value) {
+                  communityDescription = value;
+                },
               ),
             ),
           ],

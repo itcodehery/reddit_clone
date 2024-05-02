@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reddit_clone/helper/users_interact.dart';
+import 'package:reddit_clone/helper/users_fetch.dart';
 import 'package:reddit_clone/models/user.dart';
 
 class People extends StatefulWidget {
@@ -11,10 +11,6 @@ class People extends StatefulWidget {
 
 class _PeopleState extends State<People> {
   List<User> listOfUsers = [];
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

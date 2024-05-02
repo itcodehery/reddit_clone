@@ -50,21 +50,22 @@ class _CreatePostState extends State<CreatePost> {
           children: [
             const SizedBox(height: 8),
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     "TL;DR: Be Respectful",
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  const SizedBox(height: 8),
                   Text(
                     communityGuidelines,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.normal,
                     ),
                   ),
@@ -76,7 +77,7 @@ class _CreatePostState extends State<CreatePost> {
               child: Text(
                 "Post Details",
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),

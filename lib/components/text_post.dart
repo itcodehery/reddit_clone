@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reddit_clone/helper/post_options.dart';
+import 'package:reddit_clone/helper/share_post_options.dart';
 import 'package:reddit_clone/models/post.dart';
 
 class TextPost extends StatelessWidget {
@@ -27,7 +28,7 @@ class TextPost extends StatelessWidget {
                     post.title,
                     maxLines: 3,
                     style: const TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       letterSpacing: -0.3,
                       overflow: TextOverflow.ellipsis,
@@ -37,10 +38,13 @@ class TextPost extends StatelessWidget {
                       onPressed: () {
                         //show options
                         showModalBottomSheet(
+                            showDragHandle: true,
                             context: context,
                             builder: (context) {
-                              return Column(
-                                children: PostOptions().getOptions(),
+                              return SingleChildScrollView(
+                                child: Column(
+                                  children: PostOptions().getOptions(),
+                                ),
                               );
                             });
                       },
@@ -59,20 +63,29 @@ class TextPost extends StatelessWidget {
                 Text(
                   "${post.timestamp.toDate().hour}:${post.timestamp.toDate().minute}",
                   style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w500),
+                      fontSize: 15, fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   post.content,
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w500),
+                      fontSize: 14, fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(height: 12),
                 Row(
                   children: [
                     getCustomButton(() {}, Icons.card_giftcard_outlined, ""),
                     const SizedBox(width: 10),
-                    getCustomButton(() {}, Icons.share, ''),
+                    getCustomButton(() {
+                      showModalBottomSheet(
+                          showDragHandle: true,
+                          context: context,
+                          builder: (context) {
+                            return Column(
+                              children: SharePost().getOptions(),
+                            );
+                          });
+                    }, Icons.share, ''),
                     const Spacer(),
                     getCustomButton(() {}, Icons.mode_comment_outlined,
                         "${post.comments.length}"),
@@ -93,12 +106,15 @@ class TextPost extends StatelessWidget {
       void Function() onPressed, IconData icon, String text) {
     return ElevatedButton(
       style: const ButtonStyle(
-        elevation: MaterialStatePropertyAll(0),
-      ),
+          elevation: MaterialStatePropertyAll(0),
+          padding: MaterialStatePropertyAll(EdgeInsets.zero)),
       onPressed: onPressed,
       child: Row(
         children: [
-          Icon(icon),
+          Icon(
+            icon,
+            size: 16,
+          ),
           const SizedBox(width: 5),
           Text(text == "0" ? "Vote" : text),
         ],

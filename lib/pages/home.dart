@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reddit_clone/components/hold_app_bar.dart';
 import 'package:reddit_clone/components/text_post.dart';
 import 'package:reddit_clone/helper/posts_fetch.dart';
 import 'package:reddit_clone/models/post.dart';
@@ -18,46 +19,14 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
-        ),
-        title: const Text(
-          'the hold',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            letterSpacing: -0.5,
-            color: Color.fromARGB(255, 114, 23, 17),
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.account_circle_outlined),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return Myprofile(
-                    user: User(
-                        userId: 'userId',
-                        username: 'username',
-                        honor: 0,
-                        email: 'email'));
-              }));
-            },
-          ),
-        ],
-      ),
+      appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(60.0), child: HoldAppBar()),
       //list of posts
       body: FutureBuilder(
         future: getPosts(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const LinearProgressIndicator();
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
