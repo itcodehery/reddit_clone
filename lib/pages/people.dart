@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reddit_clone/helper/users_fetch.dart';
-import 'package:reddit_clone/models/user.dart';
+import 'package:reddit_clone/models/holduser.dart';
 
 class People extends StatefulWidget {
   const People({Key? key}) : super(key: key);
@@ -10,13 +10,13 @@ class People extends StatefulWidget {
 }
 
 class _PeopleState extends State<People> {
-  List<User> listOfUsers = [];
+  List<HoldUser> listOfUsers = [];
 
   @override
   Widget build(BuildContext context) {
     // returns a list of all users with username and email
     return Scaffold(
-      body: FutureBuilder<List<User>>(
+      body: FutureBuilder<List<HoldUser>>(
         future: getUsers(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

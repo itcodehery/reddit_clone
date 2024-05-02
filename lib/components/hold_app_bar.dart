@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reddit_clone/models/user.dart';
+import 'package:reddit_clone/models/holduser.dart';
 import 'package:reddit_clone/pages/tertiary/myprofile.dart';
 
 class HoldAppBar extends StatelessWidget {
@@ -49,11 +49,11 @@ class HoldAppBar extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
               return Myprofile(
-                  user: User(
+                  user: HoldUser(
                       userId: 'userId',
-                      username: 'username',
-                      honor: 0,
-                      email: 'email'));
+                      username: 'haririoprivate',
+                      honor: 124534,
+                      email: 'haririo321@gmail.com'));
             }));
           },
         ),

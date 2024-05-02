@@ -3,8 +3,6 @@ import 'package:reddit_clone/components/hold_app_bar.dart';
 import 'package:reddit_clone/components/text_post.dart';
 import 'package:reddit_clone/helper/posts_fetch.dart';
 import 'package:reddit_clone/models/post.dart';
-import 'package:reddit_clone/models/user.dart';
-import 'package:reddit_clone/pages/tertiary/myprofile.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});

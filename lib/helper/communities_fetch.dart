@@ -23,7 +23,7 @@ Future<void> createSubhold(
   await subholdsCollection.add({
     'subholdName': name,
     'subholdDescription': description,
-    'posts': [],
+    'posts': DocumentReference,
     'subholdModerator': moderator,
   });
 }

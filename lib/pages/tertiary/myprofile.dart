@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:reddit_clone/models/user.dart';
+import 'package:reddit_clone/models/holduser.dart';
 
 class Myprofile extends StatelessWidget {
   const Myprofile({Key? key, required this.user}) : super(key: key);
 
-  final User user;
+  final HoldUser user;
 
   @override
   Widget build(BuildContext context) {
@@ -19,26 +19,41 @@ class Myprofile extends StatelessWidget {
               color: Color.fromARGB(255, 114, 23, 17),
             ),
           ),
-          actions: [
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text('Edit'),
-            ),
-            const SizedBox(
-              width: 10,
-            )
-          ],
         ),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('u/${user.username}', style: const TextStyle(fontSize: 24)),
-              Text('${user.honor} honor', style: const TextStyle(fontSize: 18)),
-              Text(user.email, style: const TextStyle(fontSize: 16)),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Stack(alignment: Alignment.bottomCenter, children: [
+              Column(
+                children: [
+                  Container(
+                    height: 100,
+                    width: double.maxFinite,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                  ),
+                  Container(
+                    height: 30,
+                    width: double.maxFinite,
+                    color: Colors.white,
+                  )
+                ],
+              ),
+              const Icon(
+                Icons.account_circle,
+                size: 80,
+                color: Colors.black,
+              ),
             ]),
-          ),
+            Text('u/${user.username}',
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            Text('${user.honor} honor points',
+                style: const TextStyle(fontSize: 18)),
+            const SizedBox(height: 10),
+            const Divider(),
+            Text(user.email, style: const TextStyle(fontSize: 16)),
+            const Divider(),
+          ]),
         ));
   }
 }

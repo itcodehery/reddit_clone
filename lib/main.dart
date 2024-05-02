@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:reddit_clone/firebase_options.dart';
-import 'package:reddit_clone/helper/users_fetch.dart';
 import 'package:reddit_clone/pages/communities.dart';
 import 'package:reddit_clone/pages/create/create_community.dart';
 import 'package:reddit_clone/pages/create/create_post.dart';
@@ -10,7 +9,6 @@ import 'package:reddit_clone/pages/inbox.dart';
 import 'package:reddit_clone/pages/people.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:reddit_clone/pages/primary/login.dart';
-import 'package:reddit_clone/pages/tertiary/myprofile.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

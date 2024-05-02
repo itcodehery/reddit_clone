@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Subhold {
   final String subholdName;
   final String subholdDescription;
-  final String subholdModerator;
-  final List<DocumentReference> posts;
+  final DocumentReference subholdModerator;
+  final List<dynamic> posts;
 
   Subhold(
       {required this.subholdName,
