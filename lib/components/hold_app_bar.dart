@@ -13,7 +13,9 @@ class HoldAppBar extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       leading: IconButton(
         icon: const Icon(Icons.menu),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed('/login');
+        },
       ),
       title: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +43,7 @@ class HoldAppBar extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.search),
           onPressed: () {
-            Navigator.pushNamed(context, '/login');
+            Navigator.pushNamed(context, '/search');
           },
         ),
         IconButton(

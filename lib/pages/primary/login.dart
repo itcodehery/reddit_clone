@@ -92,7 +92,7 @@ class _LoginState extends State<Login> {
                           Theme.of(context).colorScheme.primary),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => const MyApp(),
                       ));
                     },

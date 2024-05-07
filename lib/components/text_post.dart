@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:reddit_clone/helper/post_options.dart';
 import 'package:reddit_clone/helper/share_post_options.dart';
 import 'package:reddit_clone/models/post.dart';
+import 'package:reddit_clone/pages/secondary/detailed_post.dart';
 
 class TextPost extends StatelessWidget {
   final Post post;
@@ -16,7 +17,18 @@ class TextPost extends StatelessWidget {
         color: const Color.fromARGB(255, 255, 239, 235),
         elevation: 0,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => DetailedPost(
+                title: post.title,
+                content: post.content,
+                username: post.userId,
+                subholdname: post.subhold,
+                comments: post.comments,
+                honor: post.scorepoints,
+              ),
+            ));
+          },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

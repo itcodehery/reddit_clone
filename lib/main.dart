@@ -9,6 +9,8 @@ import 'package:reddit_clone/pages/inbox.dart';
 import 'package:reddit_clone/pages/people.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:reddit_clone/pages/primary/login.dart';
+import 'package:reddit_clone/pages/secondary/searchpage.dart';
+import 'package:reddit_clone/widget_tree.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,47 +42,10 @@ class _MyAppState extends State<MyApp> {
           useMaterial3: true,
           fontFamily: 'Satoshi',
         ),
-        home: Scaffold(
-          body: [
-            const MyHomePage(title: 'Home'),
-            const Communities(),
-            const People(),
-            const Inbox(),
-          ][currentIndex],
-          bottomNavigationBar: NavigationBar(
-              selectedIndex: currentIndex,
-              onDestinationSelected: (value) {
-                setState(() {
-                  currentIndex = value;
-                });
-              },
-              labelBehavior:
-                  NavigationDestinationLabelBehavior.onlyShowSelected,
-              destinations: const [
-                NavigationDestination(
-                  icon: Icon(Icons.view_list_outlined),
-                  label: 'Feed',
-                  selectedIcon: Icon(Icons.view_list),
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.people_alt_outlined),
-                  label: 'Subholds',
-                  selectedIcon: Icon(Icons.people_alt),
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.person_add_outlined),
-                  label: "People",
-                  selectedIcon: Icon(Icons.person_add),
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.inbox_outlined),
-                  label: "Inbox",
-                  selectedIcon: Icon(Icons.inbox),
-                ),
-              ]),
-        ),
+        home: const WidgetTree(),
         routes: {
           '/login': (context) => const Login(),
+          '/search': (context) => const Searchpage(),
           '/home': (context) => const MyHomePage(title: 'Home'),
           '/communities': (context) => const Communities(),
           '/inbox': (context) => const Inbox(),

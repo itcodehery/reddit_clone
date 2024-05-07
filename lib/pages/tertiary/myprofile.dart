@@ -47,12 +47,20 @@ class Myprofile extends StatelessWidget {
             Text('u/${user.username}',
                 style:
                     const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            Text('${user.honor} honor points',
-                style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
-            const Divider(),
-            Text(user.email, style: const TextStyle(fontSize: 16)),
-            const Divider(),
+            const Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ActionChip(label: Text('124k Honor')),
+                SizedBox(width: 10),
+                ActionChip(label: Text('67 comments')),
+              ],
+            ),
+            const ChoiceChip(
+              label: Text('Verified'),
+              selected: true,
+            ),
           ]),
         ));
   }
