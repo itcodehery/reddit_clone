@@ -10,6 +10,7 @@ class MainUserProvider extends ChangeNotifier {
   void login(String username, String email) {
     _username = username;
     _email = email;
+    debugPrint("Logged in as $username");
     notifyListeners();
   }
 

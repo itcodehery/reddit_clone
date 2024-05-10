@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:reddit_clone/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-enum AuthMode { Login, SignUp }
+enum AuthMode { login, signUp }
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -11,10 +12,46 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  String errorMessage = '';
   bool isLogin = true;
-  AuthMode authMode = AuthMode.Login;
+  AuthMode authMode = AuthMode.login;
   final String continuing =
       'By continuing, you agree to our User Agreement and acknowledge that you understand the Privacy Policy.';
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future<void> signInWithEmailAndPassword() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message!;
+      });
+    }
+  }
+
+  Future<void> signUpWithEmailAndPassword() async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message!;
+      });
+    }
+  }
+
+  Widget _errorSnackBar() {
+    return SnackBar(
+      content: Text(errorMessage),
+      duration: const Duration(seconds: 3),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +73,8 @@ class _LoginState extends State<Login> {
                     foregroundColor: MaterialStatePropertyAll(
                         Theme.of(context).colorScheme.primary)),
                 segments: const <ButtonSegment<AuthMode>>[
-                  ButtonSegment(value: AuthMode.Login, label: Text('Login')),
-                  ButtonSegment(value: AuthMode.SignUp, label: Text('Sign Up')),
+                  ButtonSegment(value: AuthMode.login, label: Text('Login')),
+                  ButtonSegment(value: AuthMode.signUp, label: Text('Sign Up')),
                 ],
                 selected: <AuthMode>{authMode},
                 onSelectionChanged: (Set<AuthMode> newSelection) {
@@ -69,8 +106,9 @@ class _LoginState extends State<Login> {
               TextField(
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  labelText: isLogin ? 'Username' : 'Enter a username',
+                  labelText: isLogin ? 'Email' : 'Enter an email',
                 ),
+                controller: emailController,
               ),
               const SizedBox(height: 20),
               TextField(
@@ -78,10 +116,24 @@ class _LoginState extends State<Login> {
                   border: const OutlineInputBorder(),
                   labelText: isLogin ? 'Password' : 'Enter a password',
                 ),
+                controller: passwordController,
+                obscureText: true,
               ),
               const SizedBox(height: 20),
               Row(
                 children: [
+                  SizedBox(
+                    width: errorMessage == ""
+                        ? 0
+                        : MediaQuery.of(context).size.width - 150,
+                    child: Chip(
+                        backgroundColor: Theme.of(context).colorScheme.error,
+                        label: Text(
+                          errorMessage,
+                          style: const TextStyle(color: Colors.white),
+                          overflow: TextOverflow.ellipsis,
+                        )),
+                  ),
                   const Spacer(),
                   ElevatedButton(
                     style: ButtonStyle(
@@ -92,9 +144,9 @@ class _LoginState extends State<Login> {
                           Theme.of(context).colorScheme.primary),
                     ),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const MyApp(),
-                      ));
+                      isLogin
+                          ? signInWithEmailAndPassword()
+                          : signUpWithEmailAndPassword();
                     },
                     child: Text(
                       isLogin ? "Login" : "Sign Up",

@@ -8,8 +8,8 @@ import 'package:reddit_clone/pages/home.dart';
 import 'package:reddit_clone/pages/inbox.dart';
 import 'package:reddit_clone/pages/people.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:reddit_clone/pages/primary/login.dart';
-import 'package:reddit_clone/pages/secondary/searchpage.dart';
+import 'package:reddit_clone/pages/authentication/login.dart';
+import 'package:reddit_clone/pages/overlays/searchpage.dart';
 import 'package:reddit_clone/widget_tree.dart';
 
 Future<void> main() async {

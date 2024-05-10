@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:reddit_clone/helper/communities_fetch.dart';
+import 'package:reddit_clone/models/subhold.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({Key? key}) : super(key: key);
@@ -16,6 +18,17 @@ class _CreatePostState extends State<CreatePost> {
   String postTitle = " ";
   String postContent = " ";
   String postCommunity = " ";
+  List<Subhold> subholds = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getSubholdList();
+  }
+
+  Future<void> getSubholdList() async {
+    subholds = await getSubholds();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,19 +120,18 @@ class _CreatePostState extends State<CreatePost> {
                     ),
                   ),
                   subtitle: const Text("You must be following this community"),
-                  trailing: DropdownButton(
-                    padding: const EdgeInsets.all(4),
-                    value: selectedValue,
-                    items: const [
-                      DropdownMenuItem(value: '1', child: Text('flutter/hold')),
-                      DropdownMenuItem(value: '2', child: Text('react/hold')),
-                      DropdownMenuItem(value: '3', child: Text('angular/hold')),
-                    ],
-                    onChanged: (String? value) {
-                      setState(() {
-                        selectedValue = value!;
-                      });
-                    },
+                  trailing: FutureBuilder(
+                    future: getSubholds(),
+                    builder: (context, snapshot) => DropdownButton(
+                      padding: const EdgeInsets.all(4),
+                      value: selectedValue,
+                      items: getMenuItems(snapshot.data!),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValue = value!;
+                        });
+                      },
+                    ),
                   ),
                 )),
           ],
@@ -136,5 +148,13 @@ class _CreatePostState extends State<CreatePost> {
       ),
       hintText: hintText,
     );
+  }
+
+  List<DropdownMenuItem> getMenuItems(List<Subhold> subholds) {
+    List<DropdownMenuItem> menuItems = [];
+    for (var i in subholds) {
+      menuItems.add(DropdownMenuItem(child: Text(i.subholdName)));
+    }
+    return menuItems;
   }
 }

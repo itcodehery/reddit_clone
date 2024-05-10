@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:reddit_clone/helper/post_options.dart';
 import 'package:reddit_clone/helper/share_post_options.dart';
 import 'package:reddit_clone/models/post.dart';
-import 'package:reddit_clone/pages/secondary/detailed_post.dart';
+import 'package:reddit_clone/pages/overlays/detailed_post.dart';
 
 class TextPost extends StatelessWidget {
   final Post post;

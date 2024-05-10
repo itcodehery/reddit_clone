@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reddit_clone/models/holduser.dart';
-import 'package:reddit_clone/pages/tertiary/myprofile.dart';
+import 'package:reddit_clone/pages/userprof/myprofile.dart';
 
 class HoldAppBar extends StatelessWidget {
   const HoldAppBar({
