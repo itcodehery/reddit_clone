@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:reddit_clone/firebase_options.dart';
+import 'package:reddit_clone/pages/authentication/choose_profile.dart';
 import 'package:reddit_clone/pages/communities.dart';
 import 'package:reddit_clone/pages/create/create_community.dart';
 import 'package:reddit_clone/pages/create/create_post.dart';
@@ -52,6 +53,7 @@ class _MyAppState extends State<MyApp> {
           '/people': (context) => const People(),
           '/create_post': (context) => const CreatePost(),
           '/create_community': (context) => const CreateSubhold(),
+          '/edit_profile': (context) => const ChooseProfile(),
         });
   }
 }

@@ -72,43 +72,51 @@ class Myprofile extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: getElevatedButton(context, () {
+                  Navigator.of(context).pushNamed('/edit_profile');
+                }, 'Edit Profile')),
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  fixedSize: const MaterialStatePropertyAll(
-                      Size.fromWidth(double.maxFinite)),
-                  shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8))),
-                ),
-                onPressed: () {
-                  // show alert dialog
-                  AlertDialog(
-                    content: const SingleChildScrollView(
-                      child: Text('Are you sure you want to sign out?'),
+              child: getElevatedButton(context, () {
+                AlertDialog(
+                  content: const SingleChildScrollView(
+                    child: Text('Are you sure you want to sign out?'),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Cancel'),
                     ),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('Cancel'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          signOut();
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => const Login()));
-                        },
-                        child: const Text('Sign Out'),
-                      ),
-                    ],
-                  );
-                },
-                child: const Text('Sign Out'),
-              ),
+                    TextButton(
+                      onPressed: () {
+                        signOut();
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const Login()));
+                      },
+                      child: const Text('Sign Out'),
+                    ),
+                  ],
+                );
+              }, 'Sign Out'),
             ),
           ]),
         ));
+  }
+
+  ElevatedButton getElevatedButton(
+      BuildContext context, void Function() onPressed, String text) {
+    return ElevatedButton(
+      style: ButtonStyle(
+        fixedSize:
+            const MaterialStatePropertyAll(Size.fromWidth(double.maxFinite)),
+        shape: MaterialStatePropertyAll(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+      ),
+      onPressed: onPressed,
+      child: Text(text),
+    );
   }
 }

@@ -128,6 +128,10 @@ class _LoginState extends State<Login> {
                         : MediaQuery.of(context).size.width - 150,
                     child: Chip(
                         backgroundColor: Theme.of(context).colorScheme.error,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide.none,
+                        ),
                         label: Text(
                           errorMessage,
                           style: const TextStyle(color: Colors.white),
