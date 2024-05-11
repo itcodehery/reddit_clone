@@ -87,7 +87,10 @@ class _CreatePostState extends State<CreatePost> {
         actions: [
           IconButton(
             icon: const Icon(Icons.check),
-            onPressed: savePost,
+            onPressed: () {
+              savePost();
+              Navigator.pop(context);
+            },
           ),
         ],
       ),

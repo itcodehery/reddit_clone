@@ -13,6 +13,7 @@ class ChooseProfile extends StatefulWidget {
 
 class ChooseProfileState extends State<ChooseProfile> {
   TextEditingController usernameController = TextEditingController();
+  TextEditingController aboutYouController = TextEditingController();
 
   //file to store the image
   File? _image;
@@ -36,7 +37,11 @@ class ChooseProfileState extends State<ChooseProfile> {
           title: const Text('Create Profile'),
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           actions: [
-            ElevatedButton(onPressed: () {}, child: const Icon(Icons.check)),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacementNamed('/widget_core');
+                },
+                child: const Icon(Icons.check)),
             const SizedBox(width: 10),
           ],
         ),
@@ -47,7 +52,7 @@ class ChooseProfileState extends State<ChooseProfile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text('Choose a username:'),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 TextField(
                   controller: usernameController,
                   decoration: const InputDecoration(
@@ -64,25 +69,52 @@ class ChooseProfileState extends State<ChooseProfile> {
                     FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')),
                   ],
                 ),
-                const SizedBox(height: 20),
-                const Text('Choose a profile picture:'),
-                Container(
-                    height: 200,
-                    width: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
+                const SizedBox(height: 10),
+                const Text('Your Bio:'),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: aboutYouController,
+                  maxLines: 4,
+                  decoration: const InputDecoration(
+                    hintText: 'About You',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
                     ),
-                    child: _image != null
-                        ? Image.file(
-                            _image!,
-                            fit: BoxFit.cover,
-                            width: 200,
-                            height: 200,
-                          )
-                        : const Icon(Icons.person, size: 200)),
-                ElevatedButton(
-                    onPressed: _openImagePicker,
-                    child: const Text('Choose Image')),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Text('Choose a profile picture:'),
+                const SizedBox(height: 10),
+                Center(
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                          onPressed: _openImagePicker,
+                          child: const Text('Choose Image')),
+                      const Spacer(),
+                      Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(
+                              color: Colors.black.withAlpha(90),
+                              width: 1,
+                            ),
+                          ),
+                          child: _image != null
+                              ? Image.file(
+                                  _image!,
+                                  fit: BoxFit.cover,
+                                  width: 100,
+                                  height: 100,
+                                )
+                              : const Icon(Icons.person, size: 60)),
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 20),
               ],
             ),

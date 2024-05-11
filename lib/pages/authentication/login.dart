@@ -168,7 +168,11 @@ class _LoginState extends State<Login> {
                     onPressed: () {
                       isLogin
                           ? signInWithEmailAndPassword()
-                          : signUpWithEmailAndPassword();
+                          : {
+                              signUpWithEmailAndPassword(),
+                              SharedPreferencesHelper.saveBool(
+                                  true, 'firstTimeLogin'),
+                            };
                     },
                     child: Text(
                       isLogin ? "Login" : "Sign Up",

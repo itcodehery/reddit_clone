@@ -11,6 +11,7 @@ import 'package:reddit_clone/pages/people.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:reddit_clone/pages/authentication/login.dart';
 import 'package:reddit_clone/pages/overlays/searchpage.dart';
+import 'package:reddit_clone/widget_core.dart';
 import 'package:reddit_clone/widget_tree.dart';
 
 Future<void> main() async {
@@ -45,6 +46,7 @@ class _MyAppState extends State<MyApp> {
         ),
         home: const WidgetTree(),
         routes: {
+          '/widget_core': (context) => const WidgetCore(),
           '/login': (context) => const Login(),
           '/search': (context) => const Searchpage(),
           '/home': (context) => const MyHomePage(title: 'Home'),

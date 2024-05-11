@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reddit_clone/models/holduser.dart';
-import 'package:reddit_clone/pages/auth.dart';
+import 'package:reddit_clone/helper/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:reddit_clone/pages/authentication/login.dart';
 
