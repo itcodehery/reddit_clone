@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ChooseProfile extends StatefulWidget {
@@ -12,14 +13,32 @@ class ChooseProfile extends StatefulWidget {
 
 class ChooseProfileState extends State<ChooseProfile> {
   TextEditingController usernameController = TextEditingController();
-  ImagePicker? picker = ImagePicker();
-  dynamic _image;
+
+  //file to store the image
+  File? _image;
+  final _picker = ImagePicker();
+
+  //to open the image picker
+  Future<void> _openImagePicker() async {
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Create Profile'),
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          actions: [
+            ElevatedButton(onPressed: () {}, child: const Icon(Icons.check)),
+            const SizedBox(width: 10),
+          ],
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -39,19 +58,14 @@ class ChooseProfileState extends State<ChooseProfile> {
                       ),
                     ),
                   ),
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(20),
+                    // replace spaces with underscores
+                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')),
+                  ],
                 ),
                 const SizedBox(height: 20),
                 const Text('Choose a profile picture:'),
-                ElevatedButton(
-                    onPressed: () async {
-                      final XFile? image =
-                          await picker!.pickImage(source: ImageSource.gallery);
-                      setState(() {
-                        _image = File(image!.path);
-                      });
-                    },
-                    child: const Text('Choose Image')),
-                const SizedBox(height: 20),
                 Container(
                     height: 200,
                     width: 200,
@@ -60,18 +74,16 @@ class ChooseProfileState extends State<ChooseProfile> {
                     ),
                     child: _image != null
                         ? Image.file(
-                            _image,
+                            _image!,
+                            fit: BoxFit.cover,
                             width: 200,
                             height: 200,
                           )
                         : const Icon(Icons.person, size: 200)),
                 ElevatedButton(
-                  onPressed: () {
-                    // Save username to database
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Create Profile'),
-                ),
+                    onPressed: _openImagePicker,
+                    child: const Text('Choose Image')),
+                const SizedBox(height: 20),
               ],
             ),
           ),

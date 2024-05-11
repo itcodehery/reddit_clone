@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:reddit_clone/pages/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:reddit_clone/pages/authentication/choose_profile.dart';
 import 'package:reddit_clone/pages/authentication/login.dart';
-import 'package:reddit_clone/widget_core.dart';
 
 class WidgetTree extends StatefulWidget {
   const WidgetTree({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class WidgetTreeState extends State<WidgetTree> {
         stream: Auth().authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const WidgetCore();
+            return const ChooseProfile();
           } else {
             return const Login();
           }

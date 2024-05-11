@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:reddit_clone/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:reddit_clone/helper/shared_prefs_helper.dart';
 
 enum AuthMode { login, signUp }
 
@@ -15,8 +15,26 @@ class _LoginState extends State<Login> {
   String errorMessage = '';
   bool isLogin = true;
   AuthMode authMode = AuthMode.login;
-  final String continuing =
+
+  //shared_prefs_key
+  bool firstTimeLogin = false;
+
+  //initState
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferencesHelper.getBool('firstTimeLogin').then((value) {
+      setState(() {
+        firstTimeLogin = value;
+      });
+    });
+  }
+
+  //statics
+  static String continuing =
       'By continuing, you agree to our User Agreement and acknowledge that you understand the Privacy Policy.';
+
+  //controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -46,12 +64,12 @@ class _LoginState extends State<Login> {
     }
   }
 
-  Widget _errorSnackBar() {
-    return SnackBar(
-      content: Text(errorMessage),
-      duration: const Duration(seconds: 3),
-    );
-  }
+  // Widget _errorSnackBar() {
+  //   return SnackBar(
+  //     content: Text(errorMessage),
+  //     duration: const Duration(seconds: 3),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

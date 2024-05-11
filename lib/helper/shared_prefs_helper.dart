@@ -44,4 +44,16 @@ class SharedPreferencesHelper {
       return false;
     }
   }
+
+  //save a boolean in shared prefs
+  static Future<void> saveBool(bool value, String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool(key, value);
+  }
+
+  //get a boolean from shared prefs
+  static Future<bool> getBool(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(key) ?? false;
+  }
 }

@@ -79,27 +79,30 @@ class Myprofile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: getElevatedButton(context, () {
-                AlertDialog(
-                  content: const SingleChildScrollView(
-                    child: Text('Are you sure you want to sign out?'),
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        signOut();
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const Login()));
-                      },
-                      child: const Text('Sign Out'),
-                    ),
-                  ],
-                );
+                //show an alert dialog
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Sign Out'),
+                        content: const Text(
+                            'Are you sure you want to sign out of your account?'),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Cancel')),
+                          TextButton(
+                              onPressed: () {
+                                //delete account
+                                signOut();
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Sign Out')),
+                        ],
+                      );
+                    });
               }, 'Sign Out'),
             ),
           ]),
