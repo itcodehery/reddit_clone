@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:reddit_clone/firebase_options.dart';
 import 'package:reddit_clone/pages/authentication/choose_profile.dart';
 import 'package:reddit_clone/pages/communities.dart';
@@ -11,6 +12,7 @@ import 'package:reddit_clone/pages/people.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:reddit_clone/pages/authentication/login.dart';
 import 'package:reddit_clone/pages/overlays/searchpage.dart';
+import 'package:reddit_clone/provider/main_user_provider.dart';
 import 'package:reddit_clone/widget_core.dart';
 import 'package:reddit_clone/widget_tree.dart';
 
@@ -34,9 +36,19 @@ class _MyAppState extends State<MyApp> {
   int currentIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    getUserUserUser();
+  }
+
+  void getUserUserUser() async {
+    Provider.of<MainUserProvider>(context).getTheDamnUser();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'The Hold',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(

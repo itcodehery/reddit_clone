@@ -36,7 +36,9 @@ class _CreatePostState extends State<CreatePost> {
 
     // Create a map to store post data
     final postData = {
-      'author': Provider.of<MainUserProvider>(context, listen: false).username,
+      'author': Provider.of<MainUserProvider>(context, listen: false)
+          .currentUser!
+          .username,
       'title': title,
       'content': content,
       'subholdId':

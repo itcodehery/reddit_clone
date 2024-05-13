@@ -5,7 +5,10 @@ import 'package:reddit_clone/pages/userprof/myprofile.dart';
 class HoldAppBar extends StatelessWidget {
   const HoldAppBar({
     super.key,
+    this.currentUser,
   });
+
+  final HoldUser? currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +17,15 @@ class HoldAppBar extends StatelessWidget {
       leading: IconButton(
         icon: const Icon(Icons.menu),
         onPressed: () {
-          Navigator.of(context).pushNamed('/login');
+          Scaffold.of(context).openDrawer();
         },
       ),
-      title: const Column(
+      title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'u/haririoprivate',
-            style: TextStyle(
+            'u/${currentUser!.username.isEmpty ? 'anonymous' : currentUser!.username}',
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
               letterSpacing: -0.5,
@@ -30,8 +33,8 @@ class HoldAppBar extends StatelessWidget {
             ),
           ),
           Text(
-            '124k honor',
-            style: TextStyle(
+            '${currentUser?.honor.toString()} honor',
+            style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
               color: Color.fromARGB(255, 114, 23, 17),
@@ -50,12 +53,7 @@ class HoldAppBar extends StatelessWidget {
           icon: const Icon(Icons.account_circle_outlined),
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return Myprofile(
-                  user: HoldUser(
-                      userId: 'userId',
-                      username: 'haririoprivate',
-                      honor: 124534,
-                      email: 'haririo321@gmail.com'));
+              return Myprofile(user: currentUser!);
             }));
           },
         ),
