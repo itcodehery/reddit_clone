@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:reddit_clone/components/hold_app_bar.dart';
 import 'package:reddit_clone/components/text_post.dart';
 import 'package:reddit_clone/helper/posts_fetch.dart';
-import 'package:reddit_clone/helper/users_fetch.dart';
 import 'package:reddit_clone/models/holduser.dart';
 import 'package:reddit_clone/models/post.dart';
 import 'package:reddit_clone/provider/main_user_provider.dart';
