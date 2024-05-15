@@ -4,6 +4,7 @@ import 'package:firebase_auth_rest/firebase_auth_rest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:reddit_clone/helper/shared_prefs_helper.dart';
 import 'package:reddit_clone/helper/users_fetch.dart';
 
 class ChooseProfile extends StatefulWidget {
@@ -142,6 +143,8 @@ class ChooseProfileState extends State<ChooseProfile> {
                           aboutYouController.text,
                           0,
                         ).then((_) {
+                          SharedPreferencesHelper.saveBool(
+                              true, 'profileCreated');
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Profile Created!'),

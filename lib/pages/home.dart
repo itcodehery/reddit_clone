@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:reddit_clone/components/hold_app_bar.dart';
 import 'package:reddit_clone/components/text_post.dart';
 import 'package:reddit_clone/helper/posts_fetch.dart';
-import 'package:reddit_clone/models/holduser.dart';
 import 'package:reddit_clone/models/post.dart';
 import 'package:reddit_clone/provider/main_user_provider.dart';
 
@@ -17,26 +16,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  HoldUser? user;
-
-  @override
-  void initState() {
-    super.initState();
-    getTheDamnUser();
-  }
-
-  void getTheDamnUser() {
-    user = Provider.of<MainUserProvider>(context).currentUser;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60.0),
-          child: HoldAppBar(
-            currentUser: user,
-          )),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(60),
+        child: HoldAppBar(),
+      ),
       //list of posts
       body: FutureBuilder(
         future: getPosts(),
@@ -72,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     const Text('the hold'),
                     Text(
-                      "u/${user?.username}",
+                      "u/${context.watch<MainUserProvider>().username}",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -80,7 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Color.fromARGB(255, 114, 23, 17),
                       ),
                     ),
-                    Text("${user?.honor} honor"),
+                    Text(
+                        "${context.watch<MainUserProvider>().honorpoints.toString()} honor"),
                   ],
                 )),
             ListTile(

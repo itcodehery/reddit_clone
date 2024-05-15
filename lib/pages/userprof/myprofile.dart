@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:reddit_clone/models/holduser.dart';
+import 'package:provider/provider.dart';
 import 'package:reddit_clone/helper/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:reddit_clone/pages/authentication/login.dart';
+import 'package:reddit_clone/provider/main_user_provider.dart';
 
-class Myprofile extends StatelessWidget {
-  Myprofile({Key? key, required this.user}) : super(key: key);
+class Myprofile extends StatefulWidget {
+  const Myprofile({Key? key}) : super(key: key);
 
-  final HoldUser user;
+  @override
+  State<Myprofile> createState() => _MyprofileState();
+}
 
-  final User? mainUser = Auth().currentUser;
-
+class _MyprofileState extends State<Myprofile> {
   Future<void> signOut() async {
     await Auth().signOut();
   }
@@ -65,7 +65,7 @@ class Myprofile extends StatelessWidget {
               color: Colors.black,
             ),
           ]),
-          Text('u/${user.username}',
+          Text('u/${context.watch<MainUserProvider>().username}',
               style:
                   const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
@@ -74,12 +74,13 @@ class Myprofile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ActionChip(
-                label: Text('${user.honor.toString()} Honor'),
+                label: Text(
+                    '${context.watch<MainUserProvider>().honorpoints} Honor'),
                 onPressed: () {},
               ),
               const SizedBox(width: 10),
               ActionChip(
-                label: Text(user.email),
+                label: Text(context.watch<MainUserProvider>().email),
                 onPressed: () {},
               ),
             ],
@@ -104,7 +105,7 @@ class Myprofile extends StatelessWidget {
                   "Bio: ",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(user.bio),
+                Text(context.watch<MainUserProvider>().bio),
               ],
             ),
           ),
@@ -141,18 +142,4 @@ class Myprofile extends StatelessWidget {
       ),
     );
   }
-
-  // ElevatedButton getElevatedButton(
-  //     BuildContext context, void Function() onPressed, String text) {
-  //   return ElevatedButton(
-  //     style: ButtonStyle(
-  //       fixedSize:
-  //           const MaterialStatePropertyAll(Size.fromWidth(double.maxFinite)),
-  //       shape: MaterialStatePropertyAll(
-  //           RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-  //     ),
-  //     onPressed: onPressed,
-  //     child: Text(text),
-  //   );
-  // }
 }

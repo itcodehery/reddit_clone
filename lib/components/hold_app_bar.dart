@@ -5,10 +5,7 @@ import 'package:reddit_clone/pages/userprof/myprofile.dart';
 class HoldAppBar extends StatelessWidget {
   const HoldAppBar({
     super.key,
-    this.currentUser,
   });
-
-  final HoldUser? currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -20,28 +17,7 @@ class HoldAppBar extends StatelessWidget {
           Scaffold.of(context).openDrawer();
         },
       ),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'u/${currentUser!.username.isEmpty ? 'anonymous' : currentUser!.username}',
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              letterSpacing: -0.5,
-              color: Color.fromARGB(255, 114, 23, 17),
-            ),
-          ),
-          Text(
-            '${currentUser?.honor.toString()} honor',
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Color.fromARGB(255, 114, 23, 17),
-            ),
-          ),
-        ],
-      ),
+      title: const Text('The Hold'),
       actions: [
         IconButton(
           icon: const Icon(Icons.search),
@@ -53,7 +29,7 @@ class HoldAppBar extends StatelessWidget {
           icon: const Icon(Icons.account_circle_outlined),
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return Myprofile(user: currentUser!);
+              return Myprofile();
             }));
           },
         ),

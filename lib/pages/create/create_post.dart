@@ -8,10 +8,10 @@ class CreatePost extends StatefulWidget {
   const CreatePost({Key? key}) : super(key: key);
 
   @override
-  _CreatePostState createState() => _CreatePostState();
+  CreatePostState createState() => CreatePostState();
 }
 
-class _CreatePostState extends State<CreatePost> {
+class CreatePostState extends State<CreatePost> {
   String selectedValue = "1";
   String communityGuidelines =
       "Remember to keep the community friendly and inclusive! Before creating a post, please take a moment to review the community's guidelines. These guidelines help the moderators maintain a positive environment for everyone. Let's be respectful of each other's opinions and have productive discussions!";
@@ -36,9 +36,7 @@ class _CreatePostState extends State<CreatePost> {
 
     // Create a map to store post data
     final postData = {
-      'author': Provider.of<MainUserProvider>(context, listen: false)
-          .currentUser!
-          .username,
+      'author': context.watch<MainUserProvider>().username,
       'title': title,
       'content': content,
       'subholdId':

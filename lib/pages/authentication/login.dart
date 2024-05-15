@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:password_strength/password_strength.dart';
+import 'package:flutter/services.dart';
 import 'package:reddit_clone/helper/shared_prefs_helper.dart';
 
 enum AuthMode { login, signUp }
@@ -71,6 +73,8 @@ class _LoginState extends State<Login> {
   //   );
   // }
 
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,22 +125,47 @@ class _LoginState extends State<Login> {
               Text(isLogin ? "Login" : "Sign Up",
                   style: const TextStyle(fontSize: 18)),
               const SizedBox(height: 10),
-              TextField(
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: isLogin ? 'Email' : 'Enter an email',
-                ),
-                controller: emailController,
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: isLogin ? 'Password' : 'Enter a password',
-                ),
-                controller: passwordController,
-                obscureText: true,
-              ),
+              Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: isLogin ? 'Email' : 'Enter an email',
+                        ),
+                        controller: emailController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: isLogin ? 'Password' : 'Enter a password',
+                        ),
+                        controller: passwordController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter(' ', allow: false),
+                        ],
+                        obscureText: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a valid password';
+                          }
+                          double strength = estimatePasswordStrength(value);
+                          if (strength < 0.3) {
+                            return 'Password is too weak';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  )),
               const SizedBox(height: 20),
               Row(
                 children: [
@@ -166,13 +195,16 @@ class _LoginState extends State<Login> {
                           Theme.of(context).colorScheme.primary),
                     ),
                     onPressed: () {
-                      isLogin
-                          ? signInWithEmailAndPassword()
-                          : {
-                              signUpWithEmailAndPassword(),
-                              SharedPreferencesHelper.saveBool(
-                                  true, 'firstTimeLogin'),
-                            };
+                      //validate form
+                      if (formKey.currentState!.validate()) {
+                        isLogin
+                            ? signInWithEmailAndPassword()
+                            : {
+                                signUpWithEmailAndPassword(),
+                                SharedPreferencesHelper.saveBool(
+                                    true, 'firstTimeLogin'),
+                              };
+                      }
                     },
                     child: Text(
                       isLogin ? "Login" : "Sign Up",

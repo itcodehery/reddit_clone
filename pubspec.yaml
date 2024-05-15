@@ -45,6 +45,7 @@ dependencies:
   firebase_auth_rest: ^2.0.4
   image_picker: ^1.0.8
   flutter_launcher_icons: ^0.13.1
+  password_strength: ^0.2.0
 
 dev_dependencies:
   flutter_test:
