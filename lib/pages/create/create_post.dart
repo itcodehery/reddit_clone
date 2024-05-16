@@ -24,7 +24,7 @@ class CreatePostState extends State<CreatePost> {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
 
-  void savePost() async {
+  Future<void> savePost() async {
     if (_selectedSubhold == null) {
       // Handle case where no subhold is selected
       return;
@@ -36,7 +36,7 @@ class CreatePostState extends State<CreatePost> {
 
     // Create a map to store post data
     final postData = {
-      'author': context.watch<MainUserProvider>().username,
+      'author': context.watch<MainUserProvider>().user?.username,
       'title': title,
       'content': content,
       'subholdId':
@@ -56,7 +56,6 @@ class CreatePostState extends State<CreatePost> {
       // Optionally clear post information or show success message
     }).catchError((error) {
       debugPrint('Error saving post: $error');
-      return Future<Null>.value();
     });
   }
 

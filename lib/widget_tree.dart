@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reddit_clone/helper/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:reddit_clone/helper/shared_prefs_helper.dart';
 import 'package:reddit_clone/pages/authentication/choose_profile.dart';
 import 'package:reddit_clone/pages/authentication/login.dart';
 import 'package:reddit_clone/provider/main_user_provider.dart';
@@ -23,7 +22,11 @@ class WidgetTreeState extends State<WidgetTree> {
   @override
   void initState() {
     super.initState();
-    context.read<MainUserProvider>().getMainUser();
+    initializeProviders();
+  }
+
+  Future<void> initializeProviders() async {
+    context.read<MainUserProvider>().initializeUserIntoProvider(user: user!);
     context.read<ProfileProvider>().getProfileCreated();
   }
 
@@ -33,11 +36,7 @@ class WidgetTreeState extends State<WidgetTree> {
         stream: Auth().authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if (context.read<ProfileProvider>().isProfileCreated) {
-              return const WidgetCore();
-            } else {
-              return const ChooseProfile();
-            }
+            return const WidgetCore();
           } else {
             return const Login();
           }

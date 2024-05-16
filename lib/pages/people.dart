@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reddit_clone/helper/users_fetch.dart';
+import 'package:reddit_clone/helper/firebase_helper.dart';
 import 'package:reddit_clone/models/holduser.dart';
 
 class People extends StatefulWidget {
@@ -17,7 +17,7 @@ class _PeopleState extends State<People> {
     // returns a list of all users with username and email
     return Scaffold(
       body: FutureBuilder<List<HoldUser>>(
-        future: getUsers(),
+        future: FirebaseHelper().getUsers(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

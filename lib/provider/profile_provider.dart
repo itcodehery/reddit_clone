@@ -6,13 +6,13 @@ class ProfileProvider extends ChangeNotifier {
 
   ProfileProvider({this.isProfileCreated = false});
 
-  void changeProfileCreated() async {
+  Future<void> changeProfileCreated() async {
     isProfileCreated = true;
     SharedPreferencesHelper.saveBool(isProfileCreated, "profile created");
     notifyListeners();
   }
 
-  void getProfileCreated() async {
+  Future<void> getProfileCreated() async {
     isProfileCreated = await SharedPreferencesHelper.getBool("profile created");
   }
 }

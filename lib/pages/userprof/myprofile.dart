@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reddit_clone/helper/auth.dart';
+import 'package:reddit_clone/helper/firebase_helper.dart';
+import 'package:reddit_clone/helper/shared_prefs_helper.dart';
+import 'package:reddit_clone/models/holduser.dart';
 import 'package:reddit_clone/provider/main_user_provider.dart';
 
 class Myprofile extends StatefulWidget {
@@ -65,7 +68,7 @@ class _MyprofileState extends State<Myprofile> {
               color: Colors.black,
             ),
           ]),
-          Text('u/${context.watch<MainUserProvider>().username}',
+          Text('u/${context.watch<MainUserProvider>().user?.username}',
               style:
                   const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
@@ -75,12 +78,12 @@ class _MyprofileState extends State<Myprofile> {
             children: [
               ActionChip(
                 label: Text(
-                    '${context.watch<MainUserProvider>().honorpoints} Honor'),
+                    '${context.watch<MainUserProvider>().user?.honor} Honor'),
                 onPressed: () {},
               ),
               const SizedBox(width: 10),
               ActionChip(
-                label: Text(context.watch<MainUserProvider>().email),
+                label: Text(context.watch<MainUserProvider>().user!.username),
                 onPressed: () {},
               ),
             ],
@@ -105,7 +108,7 @@ class _MyprofileState extends State<Myprofile> {
                   "Bio: ",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(context.watch<MainUserProvider>().bio),
+                Text(context.watch<MainUserProvider>().user!.bio),
               ],
             ),
           ),
@@ -131,6 +134,7 @@ class _MyprofileState extends State<Myprofile> {
                     TextButton(
                         onPressed: () {
                           //delete account
+                          SharedPreferencesHelper.saveBool(false, "loggedIn");
                           signOut().then((value) => Navigator.of(context)
                               .pushReplacementNamed('/login'));
                         },

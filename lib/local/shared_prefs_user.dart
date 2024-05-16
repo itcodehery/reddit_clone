@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferencesHelper {
+class SharedPreferencesUserHelper {
   static const String _kUsernameKey = 'username';
   static const String _kEmailKey = 'email';
   static const String _kHonorPointsKey = 'honorPoints';

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:password_strength/password_strength.dart';
 import 'package:flutter/services.dart';
+import 'package:reddit_clone/helper/firebase_helper.dart';
 import 'package:reddit_clone/helper/shared_prefs_helper.dart';
 
 enum AuthMode { login, signUp }
@@ -39,6 +40,8 @@ class _LoginState extends State<Login> {
   //controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final usernameController = TextEditingController();
+  final bioController = TextEditingController();
 
   Future<void> signInWithEmailAndPassword() async {
     try {
@@ -65,13 +68,6 @@ class _LoginState extends State<Login> {
       });
     }
   }
-
-  // Widget _errorSnackBar() {
-  //   return SnackBar(
-  //     content: Text(errorMessage),
-  //     duration: const Duration(seconds: 3),
-  //   );
-  // }
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -124,7 +120,7 @@ class _LoginState extends State<Login> {
               const SizedBox(height: 20),
               Text(isLogin ? "Login" : "Sign Up",
                   style: const TextStyle(fontSize: 18)),
-              const SizedBox(height: 10),
+              const SizedBox(height: 14),
               Form(
                   key: formKey,
                   child: Column(
@@ -164,6 +160,54 @@ class _LoginState extends State<Login> {
                           return null;
                         },
                       ),
+                      Visibility(
+                          visible: !isLogin,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 20),
+                              const Text("Profile Details",
+                                  style: TextStyle(fontSize: 18)),
+                              const SizedBox(height: 14),
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText:
+                                      'Enter your username (this will be public)',
+                                ),
+                                controller: usernameController,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter(' ',
+                                      allow: false),
+                                  LengthLimitingTextInputFormatter(20),
+                                ],
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter some text';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(height: 20),
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText:
+                                      'Enter your bio (this will be public)',
+                                ),
+                                maxLines: 5,
+                                controller: bioController,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(200)
+                                ],
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "Bio cannot be empty!";
+                                  }
+                                },
+                              ),
+                            ],
+                          ))
                     ],
                   )),
               const SizedBox(height: 20),
@@ -201,8 +245,12 @@ class _LoginState extends State<Login> {
                             ? signInWithEmailAndPassword()
                             : {
                                 signUpWithEmailAndPassword(),
+                                FirebaseHelper().saveUserData(
+                                    usernameController.text,
+                                    bioController.text,
+                                    0),
                                 SharedPreferencesHelper.saveBool(
-                                    true, 'firstTimeLogin'),
+                                    true, "loggedIn"),
                               };
                       }
                     },

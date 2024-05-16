@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reddit_clone/firebase_options.dart';
-import 'package:reddit_clone/helper/users_fetch.dart';
+import 'package:reddit_clone/helper/firebase_helper.dart';
 import 'package:reddit_clone/pages/authentication/choose_profile.dart';
 import 'package:reddit_clone/pages/communities.dart';
 import 'package:reddit_clone/pages/create/create_community.dart';
@@ -35,7 +35,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int currentIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

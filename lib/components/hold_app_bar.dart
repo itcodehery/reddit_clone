@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:reddit_clone/models/holduser.dart';
 import 'package:reddit_clone/pages/userprof/myprofile.dart';
 
 class HoldAppBar extends StatelessWidget {
@@ -29,7 +28,7 @@ class HoldAppBar extends StatelessWidget {
           icon: const Icon(Icons.account_circle_outlined),
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return Myprofile();
+              return const Myprofile();
             }));
           },
         ),

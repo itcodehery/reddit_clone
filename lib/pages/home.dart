@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     const Text('the hold'),
                     Text(
-                      "u/${context.watch<MainUserProvider>().username}",
+                      "u/${context.watch<MainUserProvider>().user?.username}",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Text(
-                        "${context.watch<MainUserProvider>().honorpoints.toString()} honor"),
+                        "${context.watch<MainUserProvider>().user?.honor.toString()} honor"),
                   ],
                 )),
             ListTile(
